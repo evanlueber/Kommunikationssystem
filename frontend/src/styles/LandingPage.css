@@ -1,5 +1,5 @@
 @Layer components {
-    .login-page {
+    .landing-page {
         @apply flex flex-col items-center justify-center text-center gap-20 h-screen w-screen;
     }
 

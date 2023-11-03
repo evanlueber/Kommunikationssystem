@@ -1,12 +1,30 @@
-import React from 'react';
-import LoginPage from './LoginPage';
+import LandingPage from "./LandingPage";
+import { useState } from "react";
+import Registration from "./components/LoginComponents/Registration";
 
-function ChatPage() {
+function App() {
+  const [showLogin, setShowLogin] = useState(false);
+  const [newUser, setNewUser] = useState(false);
+  const [landingPage, setLandingPage] = useState(true);
   return (
     <div>
-      <LoginPage />
+      {landingPage && (
+        <LandingPage
+          setShowLogin={setShowLogin}
+          setNewUser={setNewUser}
+          setLandingPage={setLandingPage}
+        />
+      )}
+      {newUser && (
+        <Registration
+          newUser={newUser}
+          setShowLogin={setShowLogin}
+          setNewUser={setNewUser}
+          setLandingPage={setLandingPage}
+        />
+      )}
     </div>
   );
 }
 
-export default ChatPage;
+export default App;
