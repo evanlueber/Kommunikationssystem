@@ -1,6 +1,6 @@
 @Layer components {
     .landing-page {
-        @apply flex flex-col items-center justify-center text-center gap-20 h-screen w-screen;
+        @apply text-white flex flex-col items-center justify-center text-center gap-20 h-screen w-screen;
     }
 
     .chat-app-title {
