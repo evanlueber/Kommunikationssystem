@@ -1,12 +1,12 @@
-import './index.css';
 import React from 'react';
+import LoginPage from './LoginPage';
 
-function App() {
+function ChatPage() {
   return (
     <div>
-      
+      <LoginPage />
     </div>
   );
 }
 
-export default App;
+export default ChatPage;
