@@ -17,7 +17,13 @@ function App() {
       )}
       {newUser && (
         <Registration
-          newUser={newUser}
+          setShowLogin={setShowLogin}
+          setNewUser={setNewUser}
+          setLandingPage={setLandingPage}
+        />
+      )}
+      {showLogin && (
+        <Registration
           setShowLogin={setShowLogin}
           setNewUser={setNewUser}
           setLandingPage={setLandingPage}

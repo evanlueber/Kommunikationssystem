@@ -1,7 +1,6 @@
 import React from "react";
-import BackButton from "../BackButton";
 
-const Registration = ({ setLandingPage, setShowLogin, setNewUser }) => {
+const Login = ({ setLandingPage, setShowLogin, setNewUser }) => {
   return (
     <div>
       <BackButton
@@ -14,4 +13,4 @@ const Registration = ({ setLandingPage, setShowLogin, setNewUser }) => {
   );
 };
 
-export default Registration;
+export default Login;
