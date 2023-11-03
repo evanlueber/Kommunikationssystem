@@ -1,15 +1,12 @@
-version: '3.8'
-
+version: '3'
 services:
   db:
-    image: mariadb
+    image: mariadb:latest
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: CommunicationSystem
-      MYSQL_USER: evan
-      MYSQL_PASSWORD: 1234
+    env_file:
+      - ./backend/.env
     volumes:
       - ./data:/var/lib/mysql
+      - ./database:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
