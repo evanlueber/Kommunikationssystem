@@ -1,14 +1,15 @@
 import React from "react";
-import BackButton from "../BackButton";
+import Button from "../Button";
+import { BiArrowBack } from "react-icons/bi";
 
 const Registration = ({ setLandingPage, setShowLogin, setNewUser }) => {
   return (
     <div>
-      <BackButton
-        size={150}
+      <Button
         setNewUser={setNewUser}
         setShowLogin={setShowLogin}
         setLandingPage={setLandingPage}
+        buttonText= {<BiArrowBack size={20}/>}
       />
     </div>
   );

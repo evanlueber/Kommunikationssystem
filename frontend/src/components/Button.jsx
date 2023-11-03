@@ -1,7 +1,6 @@
 import React from "react";
-import { BiArrowBack } from "react-icons/bi";
 
-const BackButton = ({setLandingPage, setShowLogin, setNewUser}) => {
+const Button = ({setLandingPage, setShowLogin, setNewUser, buttonText}) => {
   return (
     <div>
       <div className="back-button" onClick={() => {
@@ -9,10 +8,10 @@ const BackButton = ({setLandingPage, setShowLogin, setNewUser}) => {
         setLandingPage(true)
         setShowLogin(false)
       }}>
-        <BiArrowBack size={20} />
+        {buttonText}
       </div>
     </div>
   );
 };
 
-export default BackButton;
+export default Button;

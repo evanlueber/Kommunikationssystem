@@ -1,6 +1,7 @@
 import LandingPage from "./LandingPage";
 import { useState } from "react";
 import Registration from "./components/LoginComponents/Registration";
+import Login from "./components/LoginComponents/Login";
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -23,7 +24,7 @@ function App() {
         />
       )}
       {showLogin && (
-        <Registration
+        <Login
           setShowLogin={setShowLogin}
           setNewUser={setNewUser}
           setLandingPage={setLandingPage}
