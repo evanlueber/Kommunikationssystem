@@ -2,7 +2,7 @@ import React from "react";
 import { BiArrowBack } from "react-icons/bi";
 import Button from "./Button";
 
-const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatAppLanding, newUser }) => {
+const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, newUser }) => {
   return (
     <div className="login-page">
       <p className="chat-app-title">{title}</p>
@@ -23,7 +23,7 @@ const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatAppLand
               setLandingPage(true);
               setShowLogin(false);
               setNewUser(false);
-              setChatAppLanding(false);
+              setChatApp(false);
             }}
             buttonText={<BiArrowBack size={20} />}
           />
@@ -32,7 +32,7 @@ const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatAppLand
               setLandingPage(false);
               setShowLogin(false);
               setNewUser(false);
-              setChatAppLanding(true);
+              setChatApp(true);
             }}
             buttonText={ newUser ? "Sign Up" : "Login"}
           />
