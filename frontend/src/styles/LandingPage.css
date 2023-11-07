@@ -4,7 +4,7 @@
     }
 
     .chat-app-title {
-        @apply text-6xl animate-zoomIn font-bold;
+        @apply text-6xl animate-zoomIn font-bold text-white;
     }
 
     .login-option {

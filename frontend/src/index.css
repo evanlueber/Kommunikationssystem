@@ -1,5 +1,6 @@
 @import "./styles/LandingPage.css";
 @import "./styles/Button.css";
+@import "./styles/Login.css";
 
 @tailwind base;
 @tailwind components;
