@@ -1,6 +1,7 @@
-@import "./styles/LandingPage.css";
-@import "./styles/Button.css";
-@import "./styles/Login.css";
+@import "./styles/landingPage/Login.css";
+@import "./styles/landingPage/Button.css";
+@import "./styles/landingPage/LandingPage.css";
+@import "./styles/chatapp/ChatApp.css";
 
 @tailwind base;
 @tailwind components;

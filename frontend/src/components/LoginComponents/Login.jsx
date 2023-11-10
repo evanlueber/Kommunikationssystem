@@ -33,6 +33,7 @@ const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, ne
               setShowLogin(false);
               setNewUser(false);
               setChatApp(true);
+              
             }}
             buttonText={ newUser ? "Sign Up" : "Login"}
           />

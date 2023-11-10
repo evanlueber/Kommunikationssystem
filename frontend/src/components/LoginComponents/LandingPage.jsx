@@ -1,6 +1,8 @@
 import React from 'react'
 
 const LandingPage = ({setLandingPage, setShowLogin, setNewUser}) => {
+  const useri
+
   return (
     <div className='landing-page'>
         <p className='chat-app-title'>Chat App</p>
