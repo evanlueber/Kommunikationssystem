@@ -92,6 +92,7 @@ app.post('/register', (req, res) => {
   });
 });
 
+
 // Login endpoint
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
@@ -235,6 +236,6 @@ app.post('/channel/:channelId/send-message', (req, res) => {
 });
 
 app.listen(port, () => console.log(`App is listening on port ${port}`))
-server.listen(port, () => {
-  console.log(`App is listening on port ${port}`);
-});
+server.listen(port+1, () => {
+  console.log(`Server is listening on port ${port+1}`);
+}); 
