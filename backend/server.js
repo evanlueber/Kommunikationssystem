@@ -1,3 +1,4 @@
+
 require('dotenv').config();
 const express = require('express');
 const https = require('https');
@@ -7,6 +8,7 @@ const mysql = require('mysql');
 const app = express();
 const server = https.createServer(app);
 const io = socketIo(server);
+const port = 5000;
 
 const generateRandomString = (length) => {
   let result = '';
@@ -90,6 +92,7 @@ app.post('/register', (req, res) => {
     return res.status(200).json({ message: 'Registration successful' });
   });
 });
+
 
 // Login endpoint
 app.post('/login', (req, res) => {
@@ -234,6 +237,6 @@ app.post('/channel/:channelId/send-message', (req, res) => {
 });
 
 app.listen(port, () => console.log(`App is listening on port ${port}`))
-server.listen(port, () => {
-  console.log(`App is listening on port ${port}`);
-});
+server.listen(port+1, () => {
+  console.log(`Server is listening on port ${port+1}`);
+}); 

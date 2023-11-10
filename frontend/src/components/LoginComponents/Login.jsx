@@ -2,7 +2,54 @@ import React from "react";
 import { BiArrowBack } from "react-icons/bi";
 import Button from "./Button";
 
-const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatAppLanding, newUser }) => {
+const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, showLogin, newUser, username, password }) => {
+  const handleLogin = async (username, password) => {
+    try {
+      const response = await fetch('https://localhost:5000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        console.log('Login successful');
+        console.log('UserId:', data.userId);
+      } else {
+        console.error('Login failed:', data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const handleRegistration = async () => {
+    try {
+      const response = await fetch('https://localhost:5000/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log('Registration successful');
+        setShowLogin(true);
+      } else {
+        console.error('Registration failed:', data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+
   return (
     <div className="login-page">
       <p className="chat-app-title">{title}</p>
@@ -23,16 +70,13 @@ const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatAppLand
               setLandingPage(true);
               setShowLogin(false);
               setNewUser(false);
-              setChatAppLanding(false);
+              setChatApp(false);
             }}
             buttonText={<BiArrowBack size={20} />}
           />
           <Button
             onClick={() => {
-              setLandingPage(false);
-              setShowLogin(false);
-              setNewUser(false);
-              setChatAppLanding(true);
+              showLogin ? handleLogin(username, password) : handleRegistration();
             }}
             buttonText={ newUser ? "Sign Up" : "Login"}
           />
