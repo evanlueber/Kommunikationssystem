@@ -7,6 +7,7 @@ const mysql = require('mysql');
 const app = express();
 const server = https.createServer(app);
 const io = socketIo(server);
+const port = 5000;
 
 const generateRandomString = (length) => {
   let result = '';
