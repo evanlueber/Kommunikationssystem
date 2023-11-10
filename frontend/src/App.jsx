@@ -1,13 +1,13 @@
 import LandingPage from "./components/LoginComponents/LandingPage";
 import { useState } from "react";
 import Login from "./components/LoginComponents/Login";
-import ChatAppLanding from "./components/ChatComponents/ChatAppLanding";
+import ChatApp from "./components/ChatComponents/ChatApp";
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [newUser, setNewUser] = useState(false);
   const [landingPage, setLandingPage] = useState(true);
-  const [chatAppLanding, setChatAppLanding] = useState(false);
+  const [chatApp, setChatApp] = useState(false);
   return (
     <div>
       {landingPage && (
@@ -15,7 +15,7 @@ function App() {
           setShowLogin={setShowLogin}
           setNewUser={setNewUser}
           setLandingPage={setLandingPage}
-          setChatAppLanding={setChatAppLanding}
+          setChatApp={setChatApp}
         />
       )}
       {newUser && (
@@ -24,7 +24,7 @@ function App() {
           setShowLogin={setShowLogin}
           setNewUser={setNewUser}
           setLandingPage={setLandingPage}
-          setChatAppLanding={setChatAppLanding}
+          setChatApp={setChatApp}
           newUser={newUser}
         />
       )}
@@ -34,11 +34,16 @@ function App() {
           setShowLogin={setShowLogin}
           setNewUser={setNewUser}
           setLandingPage={setLandingPage}
-          setChatAppLanding={setChatAppLanding}
+          setChatApp={setChatApp}
           newUser={newUser}
         />
       )}
-      {chatAppLanding && <ChatAppLanding />}
+      {chatApp && (
+        <ChatApp
+          setLandingPage={setLandingPage}
+          setChatApp={setChatApp}
+        />
+      )}
     </div>
   );
 }
