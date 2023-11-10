@@ -38,6 +38,12 @@ function App() {
           newUser={newUser}
         />
       )}
+      {chatApp && (
+        <ChatApp
+          setLandingPage={setLandingPage}
+          setChatApp={setChatApp}
+        />
+      )}
     </div>
   );
 }
