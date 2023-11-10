@@ -1,0 +1,19 @@
+@Layer components {
+
+  .button {
+    @apply bg-gradient-to-r from-indigo-300 to-purple-400 w-24 flex items-center justify-center h-10 w-32;
+  }
+}
+
+.button {
+  border-radius: 0.5rem;
+  margin: 1rem;
+  transform: scale(1);
+  transition: transform 0.35s;
+  color: white;
+
+  &:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 0.35rem rgba(0, 0, 0, 0.5);
+  }
+}

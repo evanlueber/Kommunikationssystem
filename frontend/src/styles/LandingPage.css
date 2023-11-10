@@ -1,10 +1,10 @@
 @Layer components {
-    .login-page {
-        @apply flex flex-col items-center justify-center text-center gap-20 h-screen w-screen;
+    .landing-page {
+        @apply text-white flex flex-col items-center justify-center text-center gap-20 h-screen w-screen;
     }
 
     .chat-app-title {
-        @apply text-6xl animate-zoomIn font-bold;
+        @apply text-6xl animate-zoomIn font-bold text-white;
     }
 
     .login-option {
