@@ -1,7 +1,6 @@
 import React from 'react'
 
 const LandingPage = ({setLandingPage, setShowLogin, setNewUser}) => {
-  const useri
 
   return (
     <div className='landing-page'>

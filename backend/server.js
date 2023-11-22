@@ -7,6 +7,7 @@ const mysql = require('mysql');
 const app = express();
 const server = https.createServer(app);
 const io = socketIo(server);
+const port = 5003;
 
 const generateRandomString = (length) => {
   let result = '';
@@ -32,7 +33,7 @@ app.use(
 )
 
 io.on('connection', (socket) => {
-  console.log('A user connected');
+  console.log('A users connected');
 
   socket.on('chat message', (message) => {
 
@@ -40,16 +41,17 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log('A user disconnected');
+    console.log('A users disconnected');
   });
 });
 
 //Database Conncection
 const connection = mysql.createConnection({
-  host: process.env.MYSQL_DATABASE_HOST,
-  user: process.env.MYSQL_DATABASE_USER,
-  password: process.env.MYSQL_DATABASE_PASSWORD,
-  database: process.env.MYSQL_DATABASE_DB,
+  host: "localhost",
+  user: "root",
+  password: "WWFOTmlDa0lTaEdheTg9PUQK",
+  database: "communicationSystem",
+  port: 3306
 });
 
 connection.connect((err) => {
@@ -60,29 +62,22 @@ connection.connect((err) => {
   console.log("Connected to MariaDB as id " + connection.threadId);
 });
 
-connection.end((err) => {
-    if (err) {
-      console.error('Error closing connection: ' + err.stack);
-      return;
-    }
-    console.log('Connection closed');
-  }); 
   
 //Endpoints
 // Registration endpoint
 app.post('/register', (req, res) => {
-  const { username, password } = req.body;
+  const { username, passwordHash } = req.body;
 
-  if (!username || !password) {
+  if (!username || !passwordHash) {
     return res.status(400).json({ message: 'Username and password are required' });
   }
 
   const user = {
-    Username: username,
-    Password: password
+    username: username,
+    passwordHash: passwordHash
   };
 
-  connection.query('INSERT INTO User SET (Username, Password) VALUES ?', user, (err, results) => {
+  connection.query('INSERT INTO users SET ?', user, (err, results) => {
     if (err) {
       console.error('Error registering user: ' + err.stack);
       return res.status(500).json({ message: 'Registration failed' });
@@ -93,13 +88,13 @@ app.post('/register', (req, res) => {
 
 // Login endpoint
 app.post('/login', (req, res) => {
-  const { username, password } = req.body;
+  const { username, passwordHash } = req.body;
 
-  if (!username || !password) {
+  if (!username || !passwordHash) {
     return res.status(400).json({ message: 'Username and password are required' });
   }
 
-  connection.query('SELECT * FROM User WHERE Username = ? AND Password = ?', [username, password], (err, results) => {
+  connection.query('SELECT * FROM users WHERE username = ? AND passwordHash = ?', [username, passwordHash], (err, results) => {
     if (err) {
       console.error('Error logging in: ' + err.stack);
       return res.status(500).json({ message: 'Login failed' });
@@ -136,16 +131,16 @@ app.post('/create-channel', (req, res) => {
   }
 
   const channel = {
-    ChannelName: channelName,
-    ChannelJoinId: generateRandomString(8)
+    channelName: channelName,
+    channelJoinId: generateRandomString(8)
   };
 
-  connection.query('INSERT INTO Channel SET (ChannelName, ChannelJoinId) VALUES ?', channel, (err, results) => {
+  connection.query('INSERT INTO channel SET ?', channel, (err, results) => {
     if (err) {
       console.error('Error creating channel: ' + err.stack);
       return res.status(500).json({ message: 'Channel creation failed' });
     }
-    connection.query('INSERT INTO UserChannel SET (UserId, ChannelId) VALUES ?', [req.session.userId, results.ChannelId], (err, results) => {
+    connection.query('INSERT INTO usersChannel SET ?', {userId:req.session.userId, channelId:results.channelId}, (err, results) => {
       if (err) {
         console.error('Error joining channel: ' + err.stack);
         return res.status(500).json({ message: 'Channel join failed' });
@@ -158,7 +153,7 @@ app.post('/create-channel', (req, res) => {
 
 // Get all channels
 app.get('/channels', (req, res) => {
-  connection.query('SELECT * FROM Channel', (err, results) => {
+  connection.query('SELECT * FROM channel c JOIN usersChannel uc ON c.channelId = uc.channelId WHERE uc.userId = ?', [req.session.userId], (err, results) => {
     if (err) {
       console.error('Error fetching channels: ' + err.stack);
       return res.status(500).json({ message: 'Failed to fetch channels' });
@@ -175,7 +170,7 @@ app.post('/join-channel', (req, res) => {
     return res.status(400).json({ message: 'User ID and Channel ID are required' });
   }
 
-  const channelId = connection.query('SELECT ChannelId FROM Channel WHERE ChannelJoinId = ?', joinId, (err, results) => {
+  const channelId = connection.query('SELECT channelId FROM channel WHERE channelJoinId = ?', joinId, (err, results) => {
     if (err) {
       console.error('Error fetching channel ID: ' + err.stack);
     }
@@ -183,11 +178,11 @@ app.post('/join-channel', (req, res) => {
   })
 
   const userChannel = {
-    UserId: userId,
-    ChannelId: channelId
+    userId: userId,
+    channelId: channelId
   };
 
-  connection.query('INSERT INTO UserChannel SET (UserId, ChannelId) VALUES ?', userChannel, (err, results) => {
+  connection.query('INSERT INTO usersChannel SET ?', userChannel, (err, results) => {
     if (err) {
       console.error('Error joining channel: ' + err.stack);
       return res.status(500).json({ message: 'Channel join failed' });
@@ -200,7 +195,7 @@ app.post('/join-channel', (req, res) => {
 app.get('/channel/:channelId/messages', (req, res) => {
   const channelId = req.params.channelId;
 
-  connection.query('SELECT * FROM Message WHERE ChannelId = ? ORDER BY SentAt', channelId, (err, results) => {
+  connection.query('SELECT * FROM message WHERE channelId = ? ORDER BY sentAt', channelId, (err, results) => {
     if (err) {
       console.error('Error fetching channel messages: ' + err.stack);
       return res.status(500).json({ message: 'Failed to fetch messages' });
@@ -219,12 +214,12 @@ app.post('/channel/:channelId/send-message', (req, res) => {
   }
 
   const message = {
-    UserId: userId,
-    ChannelId: channelId,
-    Content: content
+    userId: userId,
+    channelId: channelId,
+    content: content
   };
 
-  connection.query('INSERT INTO Message SET (UserId, ChannelId, Content) VALUES ?', message, (err, results) => {
+  connection.query('INSERT INTO message SET  ?', message, (err, results) => {
     if (err) {
       console.error('Error sending message: ' + err.stack);
       return res.status(500).json({ message: 'Message sending failed' });
@@ -234,6 +229,6 @@ app.post('/channel/:channelId/send-message', (req, res) => {
 });
 
 app.listen(port, () => console.log(`App is listening on port ${port}`))
-server.listen(port, () => {
-  console.log(`App is listening on port ${port}`);
+server.listen(port+1, () => {
+  console.log(`App is listening on port ${port+1}`);
 });

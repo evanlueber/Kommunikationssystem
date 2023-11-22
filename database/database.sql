@@ -1,35 +1,39 @@
-DROP DATABASE IF EXISTS CommunicationSystem;
+DROP DATABASE IF EXISTS communicationSystem;
 
-CREATE DATABASE CommunicationSystem;
+CREATE DATABASE communicationSystem;
 
-USE CommunicationSystem;
+USE communicationSystem;
 
-CREATE TABLE User (
-    UserId INT AUTO_INCREMENT PRIMARY KEY,
-    Username VARCHAR(255) NOT NULL,
-    Password VARCHAR(255) NOT NULL   
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+    userId INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    passwordHash VARCHAR(255) NOT NULL   
 );
 
-CREATE TABLE Channel (
-    ChannelId INT AUTO_INCREMENT PRIMARY KEY,
-    ChannelName VARCHAR(255) NOT NULL,
-    ChannelJoinId VARCHAR(8) NOT NULL,
+DROP TABLE IF EXISTS channel;
+CREATE TABLE channel (
+    channelId INT AUTO_INCREMENT PRIMARY KEY,
+    channelName VARCHAR(255) NOT NULL,
+    channelJoinId VARCHAR(8) NOT NULL
 );
 
-CREATE TABLE UserChannel (
-    UserChannelId INT AUTO_INCREMENT PRIMARY KEY,
-    UserId INT NOT NULL,
-    ChannelId INT NOT NULL,
-    CONSTRAINT FK_UserChannel_User FOREIGN KEY (UserId) REFERENCES User(UserId) ON DELETE CASCADE,
-    CONSTRAINT FK_UserChannel_Channel FOREIGN KEY (ChannelId) REFERENCES Channel(ChannelId) ON DELETE CASCADE
+DROP TABLE IF EXISTS usersChannel;
+CREATE TABLE usersChannel (
+    userChannelId INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL,
+    channelId INT NOT NULL,
+    CONSTRAINT FK_usersChannel_User FOREIGN KEY (userId) REFERENCES users(userId) ON DELETE CASCADE,
+    CONSTRAINT FK_usersChannel_Channel FOREIGN KEY (channelId) REFERENCES channel(channelId) ON DELETE CASCADE
 );
 
-CREATE TABLE Message (
-    MessageId INT AUTO_INCREMENT PRIMARY KEY,
-    UserId INT NOT NULL,
-    ChannelId INT NOT NULL,
-    Content VARCHAR(255) NOT NULL,
-    SentAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (UserId) REFERENCES User(UserId) ON DELETE CASCADE,
-    FOREIGN KEY (ChannelId) REFERENCES Channel(ChannelId) ON DELETE CASCADE
+DROP TABLE IF EXISTS message;
+CREATE TABLE message (
+    messageId INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL,
+    channelId INT NOT NULL,
+    content VARCHAR(255) NOT NULL,
+    sentAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT FK_message_User FOREIGN KEY (userId) REFERENCES users(userId) ON DELETE CASCADE,
+    CONSTRAINT FK_message_Channel FOREIGN KEY (channelId) REFERENCES channel(channelId) ON DELETE CASCADE
 );

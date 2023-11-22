@@ -1,6 +1,7 @@
 import React from "react";
 import { BiArrowBack } from "react-icons/bi";
 import Button from "./Button";
+import { useState } from "react";
 
 const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, newUser }) => {
   const handleLogin = async (username, password) => {
@@ -18,6 +19,9 @@ const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, ne
       if (response.ok) {
         console.log('Login successful');
         console.log('UserId:', data.userId);
+        setChatApp(true);
+        setLandingPage(false);
+        setShowLogin(false);
       } else {
         console.error('Login failed:', data.message);
       }
@@ -43,6 +47,8 @@ const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, ne
 
       if (response.ok) {
         console.log('Registration successful');
+        setShowLogin(true);
+        setNewUser(false);
       } else {
         console.error('Registration failed:', data.message);
       }
@@ -78,11 +84,7 @@ const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, ne
           />
           <Button
             onClick={() => {
-              setLandingPage(false);
-              setShowLogin(false);
-              setNewUser(false);
-              setChatApp(true);
-              
+              {newUser ? handleRegistration() : handleLogin(username, password)}
             }}
             buttonText={ newUser ? "Sign Up" : "Login"}
           />
