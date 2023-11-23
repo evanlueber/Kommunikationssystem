@@ -14,6 +14,7 @@ const ChatApp = ({ username }) => {
         setShowChannels={setShowChannels}
         setShowConnect={setShowConnect}
         setShowStandard={setShowStandard}
+        showChannels={showChannels}
       />
       <RightSide />
     </div>

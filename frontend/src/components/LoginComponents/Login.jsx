@@ -2,18 +2,12 @@ import React from "react";
 import { BiArrowBack } from "react-icons/bi";
 import Button from "./Button";
 import { useState } from "react";
+import api from "../../utils/api";
 
 const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, newUser, setCurrentUser }) => {
   const handleLogin = async (username, password) => {
     try {
-      const response = await fetch('http://localhost:5003/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password: password }),
-      }).then((res) => res.json());
-
+      const response = await api.login(username, password);
   
       if (response) {
         console.log(response)
@@ -36,22 +30,14 @@ const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, ne
 
   const handleRegistration = async () => {
     try {
-      const response = await fetch('http://localhost:5003/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password: password }),
-      });
+      const response = await api.register(username, password)
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (response) {
         console.log('Registration successful');
         setShowLogin(true);
         setNewUser(false);
       } else {
-        console.error('Registration failed:', data.message);
+        console.error('Registration failed:', response.message);
       }
     } catch (error) {
       console.error('Error:', error);

@@ -1,12 +1,14 @@
 import React from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { BiLogOut } from "react-icons/bi";
+import Channels from "./Channels";
 
 const MainComponent = ({
   username,
   setShowConnect,
   setShowChannels,
   setShowStandard,
+  showChannels
 }) => {
   return (
     <div className="flex flex-col w-1/4 h-screen ">
@@ -39,7 +41,8 @@ const MainComponent = ({
         <button className="flex flex-row">
           <BiLogOut className="mt-1 mr-1" /> Logout
         </button>
-      </div>
+      </div>{ showChannels &&
+      <Channels />}
     </div>
   );
 };

@@ -22,7 +22,10 @@ const generateRandomString = (length) => {
   return result;
 };
 
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true,
+}));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(
@@ -144,7 +147,7 @@ app.post('/login', (req, res) => {
       }
 
       // Login erfolgreich
-      req.session.userId = results[0].UserId;
+      req.session.user = results[0];
       return res.status(200).json({ message: 'Login successful', user: results[0] });
     });
   });
@@ -196,11 +199,11 @@ app.post("/create-channel", (req, res) => {
   });
 });
 
-// Get all channels
+// Get channels
 app.get("/channels", (req, res) => {
   connection.query(
-    "SELECT * FROM channel c JOIN usersChannel uc ON c.channelId = uc.channelId WHERE uc.userId = ?",
-    [req.session.userId],
+    "SELECT c.channelId, c.channelName, c.channelJoinId FROM channel c JOIN usersChannel uc ON c.channelId = uc.channelId WHERE uc.userId = ?",
+    [req.session.user.userId],
     (err, results) => {
       if (err) {
         console.error("Error fetching channels: " + err.stack);
