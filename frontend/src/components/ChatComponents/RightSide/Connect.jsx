@@ -18,7 +18,7 @@ const Connect = () => {
         <input
           type="text"
           className="outline outline-2 outline-white bg-[#252526] placeholder:text-2xl text-white p-2 w-96 focus:outline-purple-900 focus:outline-4 rounded"
-          placeholder="Channelname"
+          placeholder="Join ID"
         />
         <div className="w-1/2 text-center font-bold rounded-lg text-2xl border-2 bg-black bg-opacity-50 border-white p-8 transition-transform duration-300 scale-100 hover:scale-110 hover:shadow-[0,0,0.35]">
           Join Channel
