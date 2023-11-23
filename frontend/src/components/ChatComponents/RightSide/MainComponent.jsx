@@ -7,6 +7,7 @@ const MainComponent = () => {
     <div>
       <p>rightside</p>
       <p className=' text-white'>{currentChannel.channelName}</p>
+      {showConnect&& <Connect/>}
     </div>
   )
 }
