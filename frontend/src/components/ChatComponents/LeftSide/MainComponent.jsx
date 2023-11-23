@@ -7,11 +7,16 @@ import { useUserContext } from "../../../context/UserContext";
 import { useChatAppContext } from "../../../context/ChatAppContext";
 import { useDisplaingContext } from "../../../context/DisplaingContext";
 
-
 const MainComponent = () => {
-  const {user} = useUserContext();
-  const {setShowChannels, setShowConnect, setShowStandard, showChannels, showConnect} = useChatAppContext();
-  const { setLandingPage, setChatApp} = useDisplaingContext()
+  const { user } = useUserContext();
+  const {
+    setShowChannels,
+    setShowConnect,
+    setShowStandard,
+    showChannels,
+    showConnect,
+  } = useChatAppContext();
+  const { setLandingPage, setChatApp } = useDisplaingContext();
 
   const handleLogout = async () => {
     try {
@@ -31,11 +36,11 @@ const MainComponent = () => {
 
   return (
     <div className="flex flex-col w-1/4 h-screen ">
-        <div className="text-center p-4 border-b border-b-white border-r border-r-white text-white">
-          <p className="text-4xl">{user}</p>
-        </div>
-        <div className="flex flex-row h-screen">
-        <div className=" flex flex-col w-1/2">
+      <div className="text-center p-4 border-b border-b-white border-r border-r-white text-white">
+        <p className="text-4xl">{user}</p>
+      </div>
+      <div className="flex flex-row h-screen">
+        <div className={" flex flex-col " + (showConnect ? "w-full" : "w-1/2")}>
           <div className="flex flex-col text-xl p-5 items-start gap-5 border-r border-r-white text-white ">
             <button
               className="flex flex-row"
@@ -45,7 +50,13 @@ const MainComponent = () => {
                 setShowStandard(false);
               }}
             >
-              Channels <IoIosArrowForward className={"mt-1.5 ml-1 transition-transform" + (showChannels ? " rotate-180": "")} />
+              Channels{" "}
+              <IoIosArrowForward
+                className={
+                  "mt-1.5 ml-1 transition-transform" +
+                  (showChannels ? " rotate-180" : "")
+                }
+              />
             </button>
             <button
               className="flex flex-row"
@@ -55,7 +66,13 @@ const MainComponent = () => {
                 setShowStandard(false);
               }}
             >
-              Connect <IoIosArrowForward className={"mt-1.5 ml-1 transition-transform" + (showConnect ? " rotate-180": "")} />
+              Connect{" "}
+              <IoIosArrowForward
+                className={
+                  "mt-1.5 ml-1 transition-transform" +
+                  (showConnect ? " rotate-180" : "")
+                }
+              />
             </button>
           </div>
           <div className="flex flex-col text-xl p-5 items-start justify-end gap-5 border-r border-r-white text-white flex-grow ">
@@ -64,14 +81,16 @@ const MainComponent = () => {
             </button>
           </div>
         </div>
-        <div
-          className={
-            " transition-transform origin-left w-1/2 border-r border-r-white" +
-            (showChannels ? " scale-x-10" : " scale-x-0")
-          }
-        >
-          <Channels />
-        </div>
+        {!showConnect && (
+          <div
+            className={
+              " transition-transform origin-left w-1/2 border-r border-r-white" +
+              (showChannels ? " scale-x-10" : " scale-x-0")
+            }
+          >
+            <Channels />
+          </div>
+        )}
       </div>
     </div>
   );

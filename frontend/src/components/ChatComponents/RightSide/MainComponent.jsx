@@ -1,13 +1,17 @@
 import React from 'react'
 import { useChatAppContext } from '../../../context/ChatAppContext'
+import Connect from './Connect'
 
 const MainComponent = () => {
   const {currentChannel, showConnect} = useChatAppContext()
   return (
-    <div>
-      <p>rightside</p>
-      <p className=' text-white'>{currentChannel.channelName}</p>
-      {showConnect&& <Connect/>}
+    <div className="flex flex-col w-3/4 h-screen ">
+      <div className="text-center p-4 border-b border-b-white text-white">
+        <p className="text-4xl">{showConnect ? "Connect": currentChannel.channelName ? currentChannel.channelName: "Channel"}</p>
+      </div>
+        <div>
+          {showConnect&& <Connect/>}
+        </div>
     </div>
   )
 }

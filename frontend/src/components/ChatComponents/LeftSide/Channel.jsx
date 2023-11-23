@@ -1,15 +1,15 @@
 import React from 'react'
-import { IoIosArrowForward } from "react-icons/io";
 import { useChatAppContext } from '../../../context/ChatAppContext'
 
+
 const Channel = ({channel}) => {
-  const {setCurrentChannel} = useChatAppContext()
+  const {setCurrentChannel, showChannels, currentChannel} = useChatAppContext()
 
   return (
-    <div className='p-2 border-b border-b-white'>
-        <p className='flex flex-row' onClick={() => {
+    <div className={'p-2 border-b border-b-white ' + (currentChannel.channelName === channel.channelName ? "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900 to-indigo-500 text-lg ": "")}>
+        <p className='flex flex-row ' onClick={() => {
           setCurrentChannel(channel)
-        }}>{channel.channelName} <IoIosArrowForward className='m-1'/> </p>
+        }}>{channel.channelName} </p>
     </div>
   )
 }
