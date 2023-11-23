@@ -50,14 +50,14 @@ const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, ne
       <p className="text-6xl animate-zoomIn font-bold text-white">{title}</p>
       <div className="flex flex-col justify-center items-center gap-5 w-1/3">
         <input
-          className="outline outline-white bg-transparent rounded outline-none focus:outline-white focus:bg-gradient-to-r from-indigo-300 to-purple-400 focus:placeholder:text-black p-1"
+          className="outline outline-white bg-transparent rounded outline-none focus:outline-white focus:bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900 to-indigo-500 focus:placeholder:text-white p-1"
           type="name"
           placeholder="Username..."
           onChange={(e) => setUsername(e.target.value)}
           value={username}
         />
         <input
-          className="outline outline-white bg-transparent rounded outline-none focus:outline-white focus:bg-gradient-to-r from-indigo-300 to-purple-400 focus:placeholder:text-black p-1"
+          className="outline outline-white bg-transparent rounded outline-none focus:outline-white focus:bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900 to-indigo-500 focus:placeholder:text-white p-1"
           type="password"
           placeholder="Password..."
           onChange={(e) => setPassword(e.target.value)}
