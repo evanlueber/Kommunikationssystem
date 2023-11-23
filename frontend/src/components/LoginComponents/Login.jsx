@@ -3,7 +3,7 @@ import { BiArrowBack } from "react-icons/bi";
 import Button from "./Button";
 import { useState } from "react";
 
-const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, newUser }) => {
+const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, newUser, setCurrentUser }) => {
   const handleLogin = async (username, password) => {
     try {
       const response = await fetch('http://localhost:5003/login', {
@@ -11,19 +11,20 @@ const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, ne
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, passwordHash: password }),
-      });
+        body: JSON.stringify({ username, password: password }),
+      }).then((res) => res.json());
+
   
-      const data = await response.json();
-  
-      if (response.ok) {
+      if (response) {
+        console.log(response)
         console.log('Login successful');
-        console.log('UserId:', data.userId);
+        console.log('UserId:', response.user);
+        setCurrentUser(response.user.username);
         setChatApp(true);
         setLandingPage(false);
         setShowLogin(false);
       } else {
-        console.error('Login failed:', data.message);
+        console.error('Login failed:', response.message);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -35,12 +36,12 @@ const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, ne
 
   const handleRegistration = async () => {
     try {
-      const response = await fetch('https://localhost:5000/register', {
+      const response = await fetch('http://localhost:5003/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password: password }),
       });
 
       const data = await response.json();
