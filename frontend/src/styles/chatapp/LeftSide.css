@@ -1,5 +1,0 @@
-@Layer components {
-    .left-side {
-        @apply flex flex-col w-1/4 h-full text-white;
-    }
-}

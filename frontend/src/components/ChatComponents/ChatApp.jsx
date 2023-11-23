@@ -2,9 +2,9 @@ import React from 'react'
 import RightSide from './RightSide/MainComponent'
 import LeftSide from './LeftSide/MainComponent'
 
-const ChatApp = ({ setLanding, setChatApp, username}) => {
+const ChatApp = ({ username }) => {
   return (
-    <div className='chat-app'>
+    <div className='flex flex-row w-screen h-screen'>
       <LeftSide username={username}/>
       <RightSide />
     </div>

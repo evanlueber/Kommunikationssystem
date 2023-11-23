@@ -60,24 +60,24 @@ const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, ne
   
 
   return (
-    <div className="login-page">
-      <p className="chat-app-title">{title}</p>
-      <div className="login-container">
+    <div className="h-screen w-screen flex flex-col justify-center items-center gap-20 text-white">
+      <p className="text-6xl animate-zoomIn font-bold text-white">{title}</p>
+      <div className="flex flex-col justify-center items-center gap-5 w-1/3">
         <input
-          className="login-input focus:placeholder:text-black p-1"
+          className="outline outline-white bg-black rounded outline-none focus:outline-white focus:bg-gradient-to-r from-indigo-300 to-purple-400 focus:placeholder:text-black p-1"
           type="name"
           placeholder="Username..."
           onChange={(e) => setUsername(e.target.value)}
           value={username}
         />
         <input
-          className="login-input focus:placeholder:text-black p-1"
+          className="outline outline-white bg-black rounded outline-none focus:outline-white focus:bg-gradient-to-r from-indigo-300 to-purple-400 focus:placeholder:text-black p-1"
           type="password"
           placeholder="Password..."
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
-        <div className="buttons">
+        <div className="flex flex-row justify-center items-center">
           <Button
             onClick={() => {
               setLandingPage(true);
