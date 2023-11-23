@@ -13,9 +13,9 @@ const Channels = () => {
         getData()
     }, [])
   return (
-    <div className='border border-b-white w-1/2 text-xl items.start'>
+    <div className=' text-l items-start text-white'>
         {channels.map((channel) => {
-            return <Channel channel={channel} />
+            return <Channel channel={channel}  />
         })}
     </div>
   )

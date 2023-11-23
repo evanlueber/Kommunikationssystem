@@ -217,12 +217,12 @@ app.get("/channels", (req, res) => {
 
 // Join a channel
 app.post("/join-channel", (req, res) => {
-  const { userId, joinId } = req.body;
+  const { joinId } = req.body;
 
-  if (!userId || !joinId) {
+  if (!joinId) {
     return res
       .status(400)
-      .json({ message: "User ID and Channel ID are required" });
+      .json({ message: "Channel-join id is required " });
   }
 
   const channelId = connection.query(
@@ -237,7 +237,7 @@ app.post("/join-channel", (req, res) => {
   );
 
   const userChannel = {
-    userId: userId,
+    userId: req.session.user.userId,
     channelId: channelId,
   };
 
