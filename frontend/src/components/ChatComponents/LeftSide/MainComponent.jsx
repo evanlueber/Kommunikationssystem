@@ -1,10 +1,12 @@
 import React from 'react'
 
-const MainComponent = () => {
+const MainComponent = ({username}) => {
 
   return (
-    <div>
-      
+    <div className='left-side'>
+      <div>
+        <p>{username}</p>
+      </div>
     </div>
   )
 }

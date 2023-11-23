@@ -8,6 +8,7 @@ function App() {
   const [newUser, setNewUser] = useState(false);
   const [landingPage, setLandingPage] = useState(true);
   const [chatApp, setChatApp] = useState(false);
+  const [currentUser, setCurrentUser] = useState("");
   return (
     <div>
       {landingPage && (
@@ -26,6 +27,7 @@ function App() {
           setLandingPage={setLandingPage}
           setChatApp={setChatApp}
           newUser={newUser}
+          setCurrentUser={setCurrentUser}
         />
       )}
       {showLogin && (
@@ -36,12 +38,14 @@ function App() {
           setLandingPage={setLandingPage}
           setChatApp={setChatApp}
           newUser={newUser}
+          setCurrentUser={setCurrentUser}
         />
       )}
       {chatApp && (
         <ChatApp
           setLandingPage={setLandingPage}
           setChatApp={setChatApp}
+          username={currentUser}
         />
       )}
     </div>
