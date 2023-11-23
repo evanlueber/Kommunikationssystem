@@ -1,6 +1,6 @@
 @Layer components {
   .login-page {
-    @apply h-screen w-screen flex flex-col justify-center items-center gap-20;
+    @apply h-screen w-screen flex flex-col justify-center items-center gap-20 text-white;
   }
   
   .login-container {

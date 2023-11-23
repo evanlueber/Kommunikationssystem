@@ -8,6 +8,7 @@ const app = express();
 const server = https.createServer(app);
 const io = socketIo(server);
 const port = 5003;
+const cors = require('cors');
 
 const generateRandomString = (length) => {
   let result = '';
@@ -20,7 +21,7 @@ const generateRandomString = (length) => {
   return result;
 };
 
-
+app.use(cors());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(

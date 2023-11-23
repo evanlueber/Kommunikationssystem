@@ -6,12 +6,12 @@ import { useState } from "react";
 const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, newUser }) => {
   const handleLogin = async (username, password) => {
     try {
-      const response = await fetch('https://localhost:5000/login', {
+      const response = await fetch('http://localhost:5003/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, passwordHash: password }),
       });
   
       const data = await response.json();
@@ -66,11 +66,15 @@ const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, ne
           className="login-input focus:placeholder:text-black p-1"
           type="name"
           placeholder="Username..."
+          onChange={(e) => setUsername(e.target.value)}
+          value={username}
         />
         <input
           className="login-input focus:placeholder:text-black p-1"
           type="password"
           placeholder="Password..."
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
         />
         <div className="buttons">
           <Button
