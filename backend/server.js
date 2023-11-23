@@ -155,8 +155,7 @@ app.post("/login", (req, res) => {
 
         // Login erfolgreich
         req.session.user = results[0];
-        return res
-          .json({ success: true,message: "Login successful", user: results[0] });
+        return res.json({ success: true, message: "Login successful", user: results[0] });
       });
     }
   );

@@ -1,9 +1,10 @@
 import React from 'react'
 import { useChatAppContext } from '../../../context/ChatAppContext'
 import Connect from './Connect'
+import ChannelChat from './ChannelChat'
 
 const MainComponent = () => {
-  const {currentChannel, showConnect} = useChatAppContext()
+  const {currentChannel, showConnect, showChannelChat} = useChatAppContext()
   return (
     <div className="flex flex-col w-3/4 ">
       <div className="text-center p-4 border-b border-b-white text-white">
@@ -11,6 +12,9 @@ const MainComponent = () => {
       </div>
         <div className='flex flex-col justify-center items-center h-full'>
           {showConnect&& <Connect/>}
+        </div>
+        <div>
+          {showChannelChat&& <ChannelChat/>}
         </div>
     </div>
   )

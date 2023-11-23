@@ -14,11 +14,10 @@ const Login = ({ title }) => {
     try {
       const response = await api.login(username, password);
   
-      if (response) {
-        console.log(response)
+      if (response.success) {
         console.log('Login successful');
         console.log('UserId:', response.user);
-        setUser(response.data.user.username);
+        setUser(response.user.username);
         setChatApp(true);
         setLandingPage(false);
         setShowLogin(false);
@@ -49,7 +48,6 @@ const Login = ({ title }) => {
       console.error('Error:', error);
     }
   };
-  
 
   return (
     <div className="h-screen w-screen flex flex-col justify-center items-center gap-20 text-white">

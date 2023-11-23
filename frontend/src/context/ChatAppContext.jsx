@@ -5,9 +5,11 @@ const chatAppContextDefaultValues = {
   setShowConnect: () => {},
   setShowChannels: () => {},
   setCurrentChannel: () => {},
+  setShowChannelChat: () => {},
   showStandard: true,
   showConnect: false,
   showChannels: false,
+  showChannelChat: false,
   currentChannel: {
     channelName: "",
     channelId: 0,
@@ -25,6 +27,7 @@ const ChatAppProvider = ({ children }) => {
   const [showStandard, setShowStandard] = useState(true);
   const [showConnect, setShowConnect] = useState(false);
   const [showChannels, setShowChannels] = useState(false);
+  const [showChannelChat, setShowChannelChat] = useState(false);
   const [currentChannel, setCurrentChannel] = useState({
     channelName: "",
     channelId: 0,
@@ -35,11 +38,13 @@ const ChatAppProvider = ({ children }) => {
     showChannels,
     showConnect,
     showStandard,
+    showChannelChat,
+    currentChannel,
     setShowChannels,
     setShowConnect,
     setShowStandard,
-    currentChannel,
     setCurrentChannel,
+    setShowChannelChat,
   };
 
   return (

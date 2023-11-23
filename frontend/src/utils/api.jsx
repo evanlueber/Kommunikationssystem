@@ -32,6 +32,16 @@ const createChannel = async (name) => {
     return response.data;
 }
 
+const getMessages = async () => {
+    const response = await axios.get(uri+'/channel/:channelId/messages', {}, {withCredentials: true});
+    return response.data;
+}
+
+const sendMessage = async (userId, content) => {
+    const response = await axios.post(uri+'/channel/:channelId/send-message', { userId, content }, {withCredentials: true});
+    return response.data;
+}
+
 const api = {
     login,
     register,
@@ -39,6 +49,8 @@ const api = {
     logout,
     joinChannel,
     createChannel,
+    getMessages,
+    sendMessage
 };
 
 export default api;
