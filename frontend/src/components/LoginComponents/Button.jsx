@@ -33,7 +33,7 @@ const Button = ({ onClick, buttonText }) => {
         style={buttonStyle}
         onMouseEnter={handleHover}
         onMouseLeave={handleLeave}
-        className="bg-gradient-to-r from-indigo-300 to-purple-400 w-24 flex items-center justify-center h-10 w-32"
+        className="bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900 to-indigo-500 w-24 flex items-center justify-center h-10"
         onClick={onClick}
       >
         {buttonText}
