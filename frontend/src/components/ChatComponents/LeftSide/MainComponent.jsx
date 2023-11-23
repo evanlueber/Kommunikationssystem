@@ -4,16 +4,15 @@ import { BiLogOut } from "react-icons/bi";
 import Channels from "./Channels";
 import api from "../../../utils/api";
 import { useUserContext } from "../../../context/UserContext";
+import { useChatAppContext } from "../../../context/ChatAppContext";
+import { useDisplaingContext } from "../../../context/DisplaingContext";
 
-const MainComponent = ({
-  setShowConnect,
-  setShowChannels,
-  setShowStandard,
-  showChannels,
-  setLandingPage,
-  setChatApp,
-}) => {
+
+const MainComponent = () => {
   const {user} = useUserContext();
+  const {setShowChannels, setShowConnect, setShowStandard, showChannels, showConnect} = useChatAppContext();
+  const { setLandingPage, setChatApp} = useDisplaingContext()
+
   const handleLogout = async () => {
     try {
       const response = await api.logout();
@@ -52,11 +51,11 @@ const MainComponent = ({
               className="flex flex-row"
               onClick={() => {
                 setShowChannels(false);
-                setShowConnect(true);
+                setShowConnect(!showConnect);
                 setShowStandard(false);
               }}
             >
-              Connect <IoIosArrowForward className={"mt-1.5 ml-1 transition-transform" + (showChannels ? " rotate-180": "")} />
+              Connect <IoIosArrowForward className={"mt-1.5 ml-1 transition-transform" + (showConnect ? " rotate-180": "")} />
             </button>
           </div>
           <div className="flex flex-col text-xl p-5 items-start justify-end gap-5 border-r border-r-white text-white flex-grow ">

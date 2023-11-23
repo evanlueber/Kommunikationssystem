@@ -1,49 +1,28 @@
 import LandingPage from "./components/LoginComponents/LandingPage";
-import { useState } from "react";
 import Login from "./components/LoginComponents/Login";
 import ChatApp from "./components/ChatComponents/ChatApp";
+import { useDisplaingContext } from "./context/DisplaingContext";
 
 function App() {
-  const [showLogin, setShowLogin] = useState(false);
-  const [newUser, setNewUser] = useState(false);
-  const [landingPage, setLandingPage] = useState(true);
-  const [chatApp, setChatApp] = useState(false);
+  const { landingPage, chatApp, newUser, showLogin } = useDisplaingContext();
+
   return (
     <div>
       {landingPage && (
-        <LandingPage
-          setShowLogin={setShowLogin}
-          setNewUser={setNewUser}
-          setLandingPage={setLandingPage}
-          setChatApp={setChatApp}
-        />
+        <LandingPage />
       )}
       {newUser && (
         <Login
           title={"Sign Up"}
-          setShowLogin={setShowLogin}
-          setNewUser={setNewUser}
-          setLandingPage={setLandingPage}
-          setChatApp={setChatApp}
-          newUser={newUser}
         />
       )}
       {showLogin && (
         <Login
           title={"Login"}
-          setShowLogin={setShowLogin}
-          setNewUser={setNewUser}
-          setLandingPage={setLandingPage}
-          setChatApp={setChatApp}
-          newUser={newUser}
         />
       )}
       {chatApp && (
         <ChatApp
-          setLandingPage={setLandingPage}
-          setChatApp={setChatApp}
-          setNewUser={setNewUser}
-          setShowLogin={setShowLogin}
         />
       )}
     </div>

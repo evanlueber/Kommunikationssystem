@@ -3,10 +3,13 @@ import { BiArrowBack } from "react-icons/bi";
 import Button from "./Button";
 import { useState } from "react";
 import api from "../../utils/api";
-import {useUserContext } from "../../context/UserContext";
+import { useUserContext } from "../../context/UserContext";
+import { useDisplaingContext } from "../../context/DisplaingContext";
 
-const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatApp, newUser }) => {
+const Login = ({ title  }) => {
   const {setUser} = useUserContext()
+  const {setLandingPage, setShowLogin, setNewUser, setChatApp, newUser} = useDisplaingContext()
+  
   const handleLogin = async (username, password) => {
     try {
       const response = await api.login(username, password);

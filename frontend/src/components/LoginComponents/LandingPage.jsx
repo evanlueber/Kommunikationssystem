@@ -1,6 +1,10 @@
 import React from "react";
+import { useDisplaingContext } from "../../context/DisplaingContext";
 
-const LandingPage = ({ setLandingPage, setShowLogin, setNewUser }) => {
+
+const LandingPage = () => {
+
+  const { setLandingPage, setShowLogin, setNewUser } = useDisplaingContext();
 
   return (
     <div className="text-white flex flex-col items-center justify-center text-center gap-20 h-screen w-screen;">
