@@ -2,6 +2,7 @@
 @import "./styles/landingPage/Button.css";
 @import "./styles/landingPage/LandingPage.css";
 @import "./styles/chatapp/ChatApp.css";
+@import "./styles/chatapp/LeftSide.css";
 
 @tailwind base;
 @tailwind components;
