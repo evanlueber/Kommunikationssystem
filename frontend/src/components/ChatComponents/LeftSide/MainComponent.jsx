@@ -3,9 +3,9 @@ import { IoIosArrowForward } from "react-icons/io";
 import { BiLogOut } from "react-icons/bi";
 import Channels from "./Channels";
 import api from "../../../utils/api";
+import { useUserContext } from "../../../context/UserContext";
 
 const MainComponent = ({
-  username,
   setShowConnect,
   setShowChannels,
   setShowStandard,
@@ -13,6 +13,7 @@ const MainComponent = ({
   setLandingPage,
   setChatApp,
 }) => {
+  const {user} = useUserContext();
   const handleLogout = async () => {
     try {
       const response = await api.logout();
@@ -32,7 +33,7 @@ const MainComponent = ({
   return (
     <div className="flex flex-col w-1/4 h-screen ">
         <div className="text-center p-4 border-b border-b-white border-r border-r-white text-white">
-          <p className="text-4xl">{username}</p>
+          <p className="text-4xl">{user}</p>
         </div>
         <div className="flex flex-row h-screen">
         <div className=" flex flex-col w-1/2">
