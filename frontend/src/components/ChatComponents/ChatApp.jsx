@@ -2,7 +2,7 @@ import React from "react";
 import RightSide from "./RightSide/MainComponent";
 import LeftSide from "./LeftSide/MainComponent";
 
-const ChatApp = ({ username }) => {
+const ChatApp = ({ username, setNewUser, setShowLogin, setChatApp, setLandingPage }) => {
   const [showStandard, setShowStandard] = React.useState(true);
   const [showConnect, setShowConnect] = React.useState(false);
   const [showChannels, setShowChannels] = React.useState(false);
@@ -15,6 +15,10 @@ const ChatApp = ({ username }) => {
         setShowConnect={setShowConnect}
         setShowStandard={setShowStandard}
         showChannels={showChannels}
+        setNewUser={setNewUser}
+        setShowLogin={setShowLogin}
+        setLandingPage={setLandingPage}
+        setChatApp={setChatApp}
       />
       <RightSide />
     </div>

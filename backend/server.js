@@ -201,9 +201,10 @@ app.post("/create-channel", (req, res) => {
 
 // Get channels
 app.get("/channels", (req, res) => {
+  const user = req.session.user;
   connection.query(
     "SELECT c.channelId, c.channelName, c.channelJoinId FROM channel c JOIN usersChannel uc ON c.channelId = uc.channelId WHERE uc.userId = ?",
-    [req.session.user.userId],
+    [user.userId],
     (err, results) => {
       if (err) {
         console.error("Error fetching channels: " + err.stack);

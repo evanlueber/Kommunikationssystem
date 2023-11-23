@@ -46,6 +46,8 @@ function App() {
           setLandingPage={setLandingPage}
           setChatApp={setChatApp}
           username={currentUser}
+          setNewUser={setNewUser}
+          setShowLogin={setShowLogin}
         />
       )}
     </div>
