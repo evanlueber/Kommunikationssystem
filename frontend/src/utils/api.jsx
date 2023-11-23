@@ -23,7 +23,12 @@ const getChannels = async () => {
 }
 
 const joinChannel = async (joinId) => {
-    const response = await axios.post(uri+'/join-channel', {joinId}, {withCredentials: true});
+    const response = await axios.post(uri+'/join-channel', {joinId:joinId}, {withCredentials: true});
+    return response.data;
+}
+
+const createChannel = async (name) => {
+    const response = await axios.post(uri+'/create-channel', {channelName:name}, {withCredentials: true});
     return response.data;
 }
 
@@ -32,6 +37,8 @@ const api = {
     register,
     getChannels,
     logout,
+    joinChannel,
+    createChannel,
 };
 
 export default api;

@@ -6,7 +6,7 @@ import api from "../../utils/api";
 import { useUserContext } from "../../context/UserContext";
 import { useDisplaingContext } from "../../context/DisplaingContext";
 
-const Login = ({ title  }) => {
+const Login = ({ title }) => {
   const {setUser} = useUserContext()
   const {setLandingPage, setShowLogin, setNewUser, setChatApp, newUser} = useDisplaingContext()
   
@@ -18,7 +18,7 @@ const Login = ({ title  }) => {
         console.log(response)
         console.log('Login successful');
         console.log('UserId:', response.user);
-        setUser(response.user.username);
+        setUser(response.data.user.username);
         setChatApp(true);
         setLandingPage(false);
         setShowLogin(false);
@@ -37,10 +37,11 @@ const Login = ({ title  }) => {
     try {
       const response = await api.register(username, password)
 
-      if (response) {
+      if (response.success) {
         console.log('Registration successful');
         setShowLogin(true);
         setNewUser(false);
+        alert(response.message)
       } else {
         console.error('Registration failed:', response.message);
       }

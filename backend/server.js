@@ -22,10 +22,12 @@ const generateRandomString = (length) => {
   return result;
 };
 
-app.use(cors({
-  origin: "http://localhost:3000",
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(
@@ -73,8 +75,7 @@ app.post("/register", (req, res) => {
 
   if (!username || !password) {
     return res
-      .status(400)
-      .json({ message: "Username and password are required" });
+      .json({ success: false, message: "Username and password are required" });
   }
 
   connection.query(
@@ -83,17 +84,17 @@ app.post("/register", (req, res) => {
     (err, results) => {
       if (err) {
         console.error("Error checking username: " + err.stack);
-        return res.status(500).json({ message: "Registration failed" });
+        return res.json({ success: false, message: "Registration failed" });
       }
 
       if (results.length > 0) {
-        return res.status(409).json({ message: "Username already exists" });
+        return res.json({ success: false, message: "Username already exists" });
       }
 
       bcrypt.hash(password, 10, (err, passwordHash) => {
         if (err) {
           console.error("Error hashing password: " + err.stack);
-          return res.status(500).json({ message: "Registration failed" });
+          return res.json({ success: false, message: "Registration failed" });
         }
 
         const user = {
@@ -104,7 +105,7 @@ app.post("/register", (req, res) => {
         connection.query("INSERT INTO users SET ?", user, (err, results) => {
           if (err) {
             console.error("Error registering user: " + err.stack);
-            return res.status(500).json({ message: "Registration failed" });
+            return res.json({ success: false, message: "Registration failed" });
           }
 
           return res.status(200).json({ message: "Registration successful" });
@@ -115,42 +116,50 @@ app.post("/register", (req, res) => {
 });
 
 // Login endpoint
-app.post('/login', (req, res) => {
+app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).json({ message: 'Username and password are required' });
+    return res
+      .json({ success: false, message: "Username and password are required" });
   }
 
   // Überprüfe, ob der Benutzer existiert
-  connection.query('SELECT * FROM users WHERE username = ?', [username], (err, results) => {
-    if (err) {
-      console.error('Error logging in: ' + err.stack);
-      return res.status(500).json({ message: 'Login failed' });
-    }
-
-    if (results.length === 0) {
-      return res.status(401).json({ message: 'Invalid username or password' });
-    }
-
-    const storedPasswordHash = results[0].passwordHash;
-
-    bcrypt.compare(password, storedPasswordHash, (err, passwordMatch) => {
+  connection.query(
+    "SELECT * FROM users WHERE username = ?",
+    [username],
+    (err, results) => {
       if (err) {
-        console.error('Error comparing passwords: ' + err.stack);
-        return res.status(500).json({ message: 'Login failed' });
+        console.error("Error logging in: " + err.stack);
+        return res.json({success: false, message: "Login failed" });
       }
 
-      if (!passwordMatch) {
-        // Passwörter stimmen nicht überein
-        return res.status(401).json({ message: 'Invalid username or password' });
+      if (results.length === 0) {
+        return res
+          .json({success: false,message: "Invalid username or password" });
       }
 
-      // Login erfolgreich
-      req.session.user = results[0];
-      return res.status(200).json({ message: 'Login successful', user: results[0] });
-    });
-  });
+      const storedPasswordHash = results[0].passwordHash;
+
+      bcrypt.compare(password, storedPasswordHash, (err, passwordMatch) => {
+        if (err) {
+          console.error("Error comparing passwords: " + err.stack);
+          return res.json({success: false, message: "Login failed" });
+        }
+
+        if (!passwordMatch) {
+          // Passwörter stimmen nicht überein
+          return res
+            .json({ success: false, message: "Invalid username or password" });
+        }
+
+        // Login erfolgreich
+        req.session.user = results[0];
+        return res
+          .json({ success: true,message: "Login successful", user: results[0] });
+      });
+    }
+  );
 });
 
 // Logout endpoint
@@ -159,7 +168,7 @@ app.get("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       console.error("Error logging out: " + err.stack);
-      return res.status(500).json({ message: "Logout failed" });
+      return res.json({ success: false, message: "Logout failed" });
     }
     return res.status(200).json({ message: "Logout successful" });
   });
@@ -170,7 +179,7 @@ app.post("/create-channel", (req, res) => {
   const { channelName } = req.body;
 
   if (!channelName) {
-    return res.status(400).json({ message: "Channel name is required" });
+    return res.json({ success: false, message: "Channelname is required" });
   }
 
   const channel = {
@@ -181,22 +190,32 @@ app.post("/create-channel", (req, res) => {
   connection.query("INSERT INTO channel SET ?", channel, (err, results) => {
     if (err) {
       console.error("Error creating channel: " + err.stack);
-      return res.status(500).json({ message: "Channel creation failed" });
+      return res.json({ success: false, message: "Channel creation failed" });
     }
-    connection.query(
-      "INSERT INTO usersChannel SET ?",
-      { userId: req.session.userId, channelId: results.channelId },
-      (err, results) => {
-        if (err) {
-          console.error("Error joining channel: " + err.stack);
-          return res.status(500).json({ message: "Channel join failed" });
-        }
-        return res
-          .status(200)
-          .json({ message: "Channel created successfully" });
-      }
-    );
   });
+
+  connection.query(
+    "SELECT * FROM channel WHERE channelName = ?",
+    [channelName],
+    (error, results) => {
+      const user = req.session.user;
+      console.log(results[0]);
+
+      connection.query(
+        "INSERT INTO usersChannel SET ?",
+        { userId: user.userId, channelId: results[0].channelId },
+        (err, results) => {
+          if (err) {
+            console.error("Error joining channel: " + err.stack);
+            return res.json({ success: false, message: "Channel join failed" });
+          }
+          return res
+            .status(200)
+            .json({ message: "Channel created successfully" });
+        }
+      );
+    }
+  );
 });
 
 // Get channels
@@ -208,7 +227,7 @@ app.get("/channels", (req, res) => {
     (err, results) => {
       if (err) {
         console.error("Error fetching channels: " + err.stack);
-        return res.status(500).json({ message: "Failed to fetch channels" });
+        return res.json({ success: false, message: "Failed to fetch channels" });
       }
       return res.status(200).json({ channels: results });
     }
@@ -220,25 +239,20 @@ app.post("/join-channel", (req, res) => {
   const { joinId } = req.body;
 
   if (!joinId) {
-    return res
-      .status(400)
-      .json({ message: "Channel-join id is required " });
+    return res.json({ success: false, message: "ChannelJoinId is required " });
   }
 
   const channelId = connection.query(
-    "SELECT channelId FROM channel WHERE channelJoinId = ?",
+    "SELECT * FROM channel WHERE channelJoinId = ?",
     joinId,
     (err, results) => {
       if (err) {
         console.error("Error fetching channel ID: " + err.stack);
       }
-      return results[0].ChannelId;
-    }
-  );
 
   const userChannel = {
     userId: req.session.user.userId,
-    channelId: channelId,
+    channelId: results[0].channelId,
   };
 
   connection.query(
@@ -247,11 +261,13 @@ app.post("/join-channel", (req, res) => {
     (err, results) => {
       if (err) {
         console.error("Error joining channel: " + err.stack);
-        return res.status(500).json({ message: "Channel join failed" });
+        return res.json({ success: false, message: "Channel join failed" });
       }
       return res
         .status(200)
         .json({ message: "Joined the channel successfully" });
+    }
+  );
     }
   );
 });
@@ -266,7 +282,7 @@ app.get("/channel/:channelId/messages", (req, res) => {
     (err, results) => {
       if (err) {
         console.error("Error fetching channel messages: " + err.stack);
-        return res.status(500).json({ message: "Failed to fetch messages" });
+        return res.json({ success: false, message: "Failed to fetch messages" });
       }
       return res.status(200).json({ messages: results });
     }
@@ -280,8 +296,7 @@ app.post("/channel/:channelId/send-message", (req, res) => {
 
   if (!userId || !content) {
     return res
-      .status(400)
-      .json({ message: "User ID and message content are required" });
+      .json({ success: false, message: "User ID and message content are required" });
   }
 
   const message = {
@@ -293,7 +308,7 @@ app.post("/channel/:channelId/send-message", (req, res) => {
   connection.query("INSERT INTO message SET  ?", message, (err, results) => {
     if (err) {
       console.error("Error sending message: " + err.stack);
-      return res.status(500).json({ message: "Message sending failed" });
+      return res.json({ success: false, message: "Message sending failed" });
     }
     return res.status(200).json({ message: "Message sent successfully" });
   });
