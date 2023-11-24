@@ -15,7 +15,7 @@ const ChannelChat = () => {
         getData()
     }, [currentChannel])
   return (
-    <div className={' flex flex-col justify-center w-full text-lg text-white h-[calc(100vh-5rem)] overflow-y-scroll pt-56 ' + (showChannels === false ? "hidden" : "block")}>
+    <div className={' flex flex-col justify-center w-full text-lg text-white h-[calc(100vh-5rem)] overflow-y-scroll pt-32 pl-6 pr-6 ' + (showChannels === false ? "hidden" : "block")}>
         {messages.map((message) => {
             return <Message message={message} />
         })}
