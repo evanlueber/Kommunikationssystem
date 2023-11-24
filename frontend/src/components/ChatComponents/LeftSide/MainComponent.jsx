@@ -13,8 +13,11 @@ const MainComponent = () => {
     setShowChannels,
     setShowConnect,
     setShowStandard,
+    setCurrentChannel,
+    setShowChannelChat,
     showChannels,
     showConnect,
+    showChannelChat
   } = useChatAppContext();
   const { setLandingPage, setChatApp } = useDisplaingContext();
 
@@ -35,9 +38,9 @@ const MainComponent = () => {
   };
 
   return (
-    <div className="flex flex-col w-1/4 h-screen ">
-      <div className="text-center p-4 border-b border-b-white border-r border-r-white text-white">
-        <p className="text-4xl">{user.username}</p>
+    <div className="flex flex-col w-1/4 h-full">
+      <div className=" h-20 flex text-4xl items-center justify-center border-b border-b-white border-r border-r-white text-white">
+        <p>{user.username}</p>
       </div>
       <div className="flex flex-row h-screen">
         <div className={" flex flex-col " + (showConnect ? "w-full" : "w-1/2")}>
@@ -46,6 +49,13 @@ const MainComponent = () => {
               className="flex flex-row"
               onClick={() => {
                 setShowChannels(!showChannels);
+                setShowChannelChat(false);
+                if (showChannels) {
+                setCurrentChannel({
+                  channelName: "",
+                  channelId: 0,
+                  channelJoinId: "",
+                });}
                 setShowConnect(false);
                 setShowStandard(false);
               }}
@@ -63,6 +73,12 @@ const MainComponent = () => {
               onClick={() => {
                 setShowChannels(false);
                 setShowConnect(!showConnect);
+                setShowChannelChat(false);
+                setCurrentChannel({
+                  channelName: "",
+                  channelId: 0,
+                  channelJoinId: "",
+                });
                 setShowStandard(false);
               }}
             >

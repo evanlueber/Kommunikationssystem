@@ -7,18 +7,26 @@ const MainComponent = () => {
   const { currentChannel, showConnect, showChannelChat } = useChatAppContext();
   return (
     <div className="flex flex-col w-3/4 overflow-hidden h-full ">
-      <div className="text-center p-4 border-b border-b-white text-white">
-        <p className="text-4xl">
+      <div className=" h-20 text-4xl flex items-center justify-center border-b border-b-white text-white">
+        <p>
           {showConnect
             ? "Connect"
             : currentChannel.channelName
             ? currentChannel.channelName + "\t#" + currentChannel.channelJoinId
-            : "Channel"}
+            : "Chat"}
         </p>
       </div>
-      <div className="flex flex-col justify-center items-center h-full">
-        {showConnect && <Connect />}
-        {showChannelChat && <ChannelChat />}
+      <div className="h-screen">
+        {showConnect && (
+          <div className="flex flex-col justify-center items-center h-full">
+            <Connect />
+          </div>
+        )}
+        {showChannelChat && (
+          <div className="flex flex-col justify-center items-center h-full">
+            <ChannelChat />
+          </div>
+        )}
       </div>
     </div>
   );

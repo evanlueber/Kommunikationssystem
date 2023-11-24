@@ -5,7 +5,7 @@ import { useChatAppContext } from "../../../context/ChatAppContext";
 
 const ChannelChat = () => {
     const [messages, setMessages] = useState([])
-    const {currentChannel, showChannels} = useChatAppContext()
+    const {currentChannel, setCurrentChannel, showChannels} = useChatAppContext()
     const getData = async () => {
         const response = await api.getMessages(currentChannel.channelId)
         setMessages(response.messages)
@@ -13,9 +13,9 @@ const ChannelChat = () => {
 
     useEffect(() => {
         getData()
-    }, [])
+    }, [currentChannel])
   return (
-    <div className={' flex flex-col justify-center w-full text-lg text-white overflow-y-scroll h-5/6 ' + (showChannels === false ? "hidden" : "block")}>
+    <div className={' flex flex-col justify-center w-full text-lg text-white h-[calc(100vh-5rem)] overflow-y-scroll pt-56 ' + (showChannels === false ? "hidden" : "block")}>
         {messages.map((message) => {
             return <Message message={message} />
         })}

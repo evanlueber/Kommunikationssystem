@@ -42,7 +42,7 @@ const Connect = () => {
   };
 
   return (
-    <div className={"flex flex-col gap-5 justify-center items-center text-white text-3xl " + (showConnect === false ? "hidden" : "block")}>
+    <div className={"flex flex-col gap-5 justify-center items-center text-white text-3xl h-full" + (showConnect === false ? "hidden" : "block")}>
       <div className="w-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900 to-indigo-500 p-10 rounded flex flex-row gap-16">
         <input
           type="text"
