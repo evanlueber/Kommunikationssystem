@@ -23,9 +23,11 @@ const Login = ({ title }) => {
         setShowLogin(false);
       } else {
         console.error('Login failed:', response.message);
+        alert(response.message)
       }
     } catch (error) {
       console.error('Error:', error);
+      alert(error)
     }
   };
 
@@ -43,6 +45,7 @@ const Login = ({ title }) => {
         alert(response.message)
       } else {
         console.error('Registration failed:', response.message);
+        alert(response.message)
       }
     } catch (error) {
       console.error('Error:', error);
