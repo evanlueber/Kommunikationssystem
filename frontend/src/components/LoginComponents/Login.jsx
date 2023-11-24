@@ -17,7 +17,7 @@ const Login = ({ title }) => {
       if (response.success) {
         console.log('Login successful');
         console.log('UserId:', response.user);
-        setUser(response.user.username);
+        setUser(response.user);
         setChatApp(true);
         setLandingPage(false);
         setShowLogin(false);

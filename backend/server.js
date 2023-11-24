@@ -275,7 +275,7 @@ app.get("/channel/:channelId/messages", (req, res) => {
   const channelId = req.params.channelId;
 
   connection.query(
-    "SELECT * FROM message WHERE channelId = ? ORDER BY sentAt",
+    "SELECT * FROM message m JOIN users u ON m.userId = u.userId WHERE channelId = ? ORDER BY sentAt",
     channelId,
     (err, results) => {
       if (err) {

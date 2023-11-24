@@ -6,7 +6,7 @@ import ChannelChat from "./ChannelChat";
 const MainComponent = () => {
   const { currentChannel, showConnect, showChannelChat } = useChatAppContext();
   return (
-    <div className="flex flex-col w-3/4 ">
+    <div className="flex flex-col w-3/4 overflow-hidden h-full ">
       <div className="text-center p-4 border-b border-b-white text-white">
         <p className="text-4xl">
           {showConnect

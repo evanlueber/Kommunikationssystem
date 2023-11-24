@@ -32,8 +32,8 @@ const createChannel = async (name) => {
     return response.data;
 }
 
-const getMessages = async () => {
-    const response = await axios.get(uri+'/channel/:channelId/messages', {}, {withCredentials: true});
+const getMessages = async (channelId) => {
+    const response = await axios.get(uri+`/channel/${channelId}/messages`, {}, {withCredentials: true});
     return response.data;
 }
 

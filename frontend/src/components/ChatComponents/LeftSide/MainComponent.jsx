@@ -37,7 +37,7 @@ const MainComponent = () => {
   return (
     <div className="flex flex-col w-1/4 h-screen ">
       <div className="text-center p-4 border-b border-b-white border-r border-r-white text-white">
-        <p className="text-4xl">{user}</p>
+        <p className="text-4xl">{user.username}</p>
       </div>
       <div className="flex flex-row h-screen">
         <div className={" flex flex-col " + (showConnect ? "w-full" : "w-1/2")}>
