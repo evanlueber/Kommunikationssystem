@@ -18,8 +18,6 @@ const MainComponent = () => {
       </div>
       <div className="flex flex-col justify-center items-center h-full">
         {showConnect && <Connect />}
-      </div>
-      <div className="flex flex-col justify-center items-center h-full">
         {showChannelChat && <ChannelChat />}
       </div>
     </div>

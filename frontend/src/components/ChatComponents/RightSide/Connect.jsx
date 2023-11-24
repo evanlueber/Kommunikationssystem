@@ -3,7 +3,6 @@ import api from "../../../utils/api";
 import { useState } from "react";
 
 const Connect = () => {
-
   const [createChannel, setCreateChannel] = useState("");
   const [joinChannel, setJoinChannel] = useState("");
 
@@ -12,7 +11,7 @@ const Connect = () => {
       const response = await api.joinChannel(joinChannel);
       if (response.success) {
         console.log("Joining channel successful");
-        alert(response.message)
+        alert(response.message);
         setJoinChannel("");
       } else {
         console.error("Joining channel failed:", response.message);
@@ -27,7 +26,7 @@ const Connect = () => {
       const response = await api.createChannel(createChannel);
       if (response.success) {
         console.log("Creating channel successful");
-        alert(response.message)
+        alert(response.message);
         setCreateChannel("");
       } else {
         console.error("Creating channel failed:", response.message);
@@ -38,7 +37,7 @@ const Connect = () => {
   };
 
   return (
-    <div className="flex flex-col gap-5 justify-center items-center text-white text-3xl flex-grow ">
+    <div className="flex flex-col gap-5 justify-center items-center text-white text-3xl ">
       <div className="w-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900 to-indigo-500 p-10 rounded flex flex-row gap-16">
         <input
           type="text"

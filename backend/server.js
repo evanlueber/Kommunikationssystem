@@ -108,7 +108,7 @@ app.post("/register", (req, res) => {
             return res.json({ success: false, message: "Registration failed" });
           }
 
-          return res.status(200).json({ message: "Registration successful" });
+          return res.json({ success:true, message: "Registration successful" });
         });
       });
     }
@@ -169,7 +169,7 @@ app.get("/logout", (req, res) => {
       console.error("Error logging out: " + err.stack);
       return res.json({ success: false, message: "Logout failed" });
     }
-    return res.status(200).json({ message: "Logout successful" });
+    return res.json({ success:true, message: "Logout successful" });
   });
 });
 
@@ -208,9 +208,9 @@ app.post("/create-channel", (req, res) => {
             console.error("Error joining channel: " + err.stack);
             return res.json({ success: false, message: "Channel join failed" });
           }
+          console.log(results);
           return res
-            .status(200)
-            .json({ message: "Channel created successfully" });
+            .json({ success: true, message: "Channel created successfully" });
         }
       );
     }
@@ -228,7 +228,7 @@ app.get("/channels", (req, res) => {
         console.error("Error fetching channels: " + err.stack);
         return res.json({ success: false, message: "Failed to fetch channels" });
       }
-      return res.status(200).json({ channels: results });
+      return res.json({ success:true, channels: results });
     }
   );
 });
@@ -263,8 +263,7 @@ app.post("/join-channel", (req, res) => {
         return res.json({ success: false, message: "Channel join failed" });
       }
       return res
-        .status(200)
-        .json({ message: "Joined the channel successfully" });
+        .json({ success:true, message: "Joined the channel successfully" });
     }
   );
     }
@@ -283,7 +282,7 @@ app.get("/channel/:channelId/messages", (req, res) => {
         console.error("Error fetching channel messages: " + err.stack);
         return res.json({ success: false, message: "Failed to fetch messages" });
       }
-      return res.status(200).json({ messages: results });
+      return res.json({ success:true, messages: results });
     }
   );
 });
@@ -309,7 +308,7 @@ app.post("/channel/:channelId/send-message", (req, res) => {
       console.error("Error sending message: " + err.stack);
       return res.json({ success: false, message: "Message sending failed" });
     }
-    return res.status(200).json({ message: "Message sent successfully" });
+    return res.json({ success:true, message: "Message sent successfully" });
   });
 });
 

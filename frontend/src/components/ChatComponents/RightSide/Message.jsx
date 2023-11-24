@@ -2,7 +2,7 @@ import React from 'react'
 import { useChatAppContext } from '../../../context/ChatAppContext'
 
 const Message = ({message}) => {
-    const {currentChannel, } = useChatAppContext()
+    const {currentChannel} = useChatAppContext()
 
   return (
     <div>
