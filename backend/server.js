@@ -1,12 +1,10 @@
 require("dotenv").config();
 const express = require("express");
-const https = require("https");
-const socketIo = require("socket.io");
+const http = require("http");
+const {Server} = require("socket.io");
 const session = require("express-session");
 const mysql = require("mysql");
 const app = express();
-const server = https.createServer(app);
-const io = socketIo(server);
 const port = 5003;
 const cors = require("cors");
 const bcrypt = require("bcrypt");
@@ -38,6 +36,14 @@ app.use(
     cookie: {},
   })
 );
+
+
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
 
 io.on("connection", (socket) => {
   console.log("A users connected");
@@ -312,7 +318,6 @@ app.post("/channel/:channelId/send-message", (req, res) => {
   });
 });
 
-app.listen(port, () => console.log(`App is listening on port ${port}`));
-server.listen(port + 1, () => {
-  console.log(`App is listening on port ${port + 1}`);
+server.listen(port , () => {
+  console.log(`App is listening on port ${port }`);
 });

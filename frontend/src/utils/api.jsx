@@ -37,8 +37,8 @@ const getMessages = async (channelId) => {
     return response.data;
 }
 
-const sendMessage = async (userId, content) => {
-    const response = await axios.post(uri+'/channel/:channelId/send-message', { userId, content }, {withCredentials: true});
+const sendMessage = async (userId, content, channelId) => {
+    const response = await axios.post(uri+'/channel/'+channelId+'/send-message', { userId, content }, {withCredentials: true});
     return response.data;
 }
 
