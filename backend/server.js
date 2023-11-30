@@ -53,7 +53,7 @@ io.on("connection", (socket) => {
 
 //Database Conncection
 const connection = mysql.createConnection({
-  host: "localhost",
+  host: process.env.MYSQL_HOST,
   user: "root",
   password: "WWFOTmlDa0lTaEdheTg9PUQK",
   database: "communicationSystem",

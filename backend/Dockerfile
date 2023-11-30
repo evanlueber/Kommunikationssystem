@@ -8,4 +8,4 @@ RUN npm install
 
 EXPOSE 5003
 
-CMD ["node", "run", "start"]
+CMD ["npm", "run", "start"]
