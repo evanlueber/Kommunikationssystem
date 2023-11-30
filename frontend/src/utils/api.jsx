@@ -1,6 +1,10 @@
 import axios from 'axios';
-
-const uri = 'http://localhost:5003';
+let uri;
+if (process.env.REACT_APP_BACKEND_URI === 'backend') {
+     uri = 'http://localhost:5003';
+} else {
+     uri = process.env.REACT_APP_BACKEND_URI + ":5003";
+}
 
 const login = async (username, password) => {
     const response = await axios.post(uri+'/login', { username, password }, {withCredentials: true})

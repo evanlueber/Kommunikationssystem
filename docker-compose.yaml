@@ -21,3 +21,12 @@ services:
       - "5003:5003"
     depends_on:
       - db
+  frontend:
+    build: ./frontend
+    restart: always
+    environment:
+      - REACT_APP_BACKEND_URI=backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
