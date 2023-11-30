@@ -10,3 +10,12 @@ services:
       - ./database:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
+  backend:
+    build: ./backend
+    restart: always
+    env_file:
+      - ./backend/.env
+    ports:
+      - "5003:5003"
+    depends_on:
+      - db

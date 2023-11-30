@@ -11,7 +11,7 @@ root.render(
   <React.StrictMode>
     <DisplaingProvider>
       <UserProvider>
-        <App />
+        <App /> 
       </UserProvider>
     </DisplaingProvider>
   </React.StrictMode>
