@@ -10,3 +10,23 @@ services:
       - ./database:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
+  backend:
+    build: ./backend
+    restart: always
+    env_file:
+      - ./backend/.env
+    environment:
+      - MYSQL_HOST=db
+    ports:
+      - "5003:5003"
+    depends_on:
+      - db
+  frontend:
+    build: ./frontend
+    restart: always
+    environment:
+      - REACT_APP_BACKEND_URI=backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend

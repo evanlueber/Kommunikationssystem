@@ -1,38 +1,88 @@
 import React from "react";
 import { BiArrowBack } from "react-icons/bi";
 import Button from "./Button";
+import { useState } from "react";
+import api from "../../utils/api";
+import { useUserContext } from "../../context/UserContext";
+import { useDisplaingContext } from "../../context/DisplaingContext";
 
-const Login = ({ title, setLandingPage, setShowLogin, setNewUser, setChatAppLanding, newUser }) => {
+const Login = ({ title }) => {
+  const {setUser} = useUserContext()
+  const {setLandingPage, setShowLogin, setNewUser, setChatApp, newUser} = useDisplaingContext()
+  
+  const handleLogin = async (username, password) => {
+    try {
+      const response = await api.login(username, password);
+  
+      if (response.success) {
+        console.log('Login successful');
+        console.log('UserId:', response.user);
+        setUser(response.user);
+        setChatApp(true);
+        setLandingPage(false);
+        setShowLogin(false);
+      } else {
+        console.error('Login failed:', response.message);
+        alert(response.message)
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert(error)
+    }
+  };
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleRegistration = async () => {
+    try {
+      const response = await api.register(username, password)
+
+      if (response.success) {
+        console.log('Registration successful');
+        setShowLogin(true);
+        setNewUser(false);
+        alert(response.message)
+      } else {
+        console.error('Registration failed:', response.message);
+        alert(response.message)
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
-    <div className="login-page">
-      <p className="chat-app-title">{title}</p>
-      <div className="login-container">
+    <div className="h-screen w-screen flex flex-col justify-center items-center gap-20 text-white">
+      <p className="text-6xl animate-zoomIn font-bold text-white">{title}</p>
+      <div className="flex flex-col justify-center items-center gap-5 w-1/3">
         <input
-          className="login-input focus:placeholder:text-black p-1"
+          className="outline outline-2 outline-white bg-transparent rounded outline-none focus:outline-white focus:bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900 to-indigo-500 focus:placeholder:text-white p-1"
           type="name"
           placeholder="Username..."
+          onChange={(e) => setUsername(e.target.value)}
+          value={username}
         />
         <input
-          className="login-input focus:placeholder:text-black p-1"
+          className="outline outline-2 outline-white bg-transparent rounded outline-none focus:outline-white focus:bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900 to-indigo-500 focus:placeholder:text-white p-1"
           type="password"
           placeholder="Password..."
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
         />
-        <div className="buttons">
+        <div className="flex flex-row justify-center items-center">
           <Button
             onClick={() => {
               setLandingPage(true);
               setShowLogin(false);
               setNewUser(false);
-              setChatAppLanding(false);
+              setChatApp(false);
             }}
             buttonText={<BiArrowBack size={20} />}
           />
           <Button
             onClick={() => {
-              setLandingPage(false);
-              setShowLogin(false);
-              setNewUser(false);
-              setChatAppLanding(true);
+              {newUser ? handleRegistration() : handleLogin(username, password)}
             }}
             buttonText={ newUser ? "Sign Up" : "Login"}
           />
