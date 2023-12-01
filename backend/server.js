@@ -60,18 +60,18 @@ io.on("connection", (socket) => {
 //Database Conncection
 const connection = mysql.createConnection({
   host: process.env.MYSQL_HOST,
-  user: "root",
+  user:"root",
   password: "WWFOTmlDa0lTaEdheTg9PUQK",
-  database: "communicationSystem",
+  database: "CommunicationSystem",
   port: 3306,
 });
 
 connection.connect((err) => {
   if (err) {
     console.error("Error connecting to MariaDB: " + err.stack);
-    return;
-  }
-  console.log("Connected to MariaDB as id " + connection.threadId);
+    throw err;
+  } else {
+    console.log("Connected to MariaDB as id " + connection.threadId);}
 });
 
 //Endpoints
